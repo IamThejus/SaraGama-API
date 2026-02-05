@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+yt-dlp
+pymongo
+cloudinary
+python-dotenv
