@@ -33,11 +33,16 @@ def home():
 
 @app.get("/autocomplete")
 def autocomplete(q: str):
-    if len(q) < 2:
-        return []
-
-    data = yt.search(q, filter="songs", limit=8)
-    return [i["title"] for i in data if "title" in i]
+    collection=[]
+    data=yt.search(q, filter="songs",)
+    for i in data:
+        result={}
+        result["title"]=i["title"]
+        result["video_url"]=i["videoId"]
+        result["artist"]=[artist["name"] for artist in i["artists"]]
+        result["thumbnail"]=i["thumbnails"][-1]["url"]
+        collection.append(result)
+    return collection
 
 
 @app.post("/addsong")
