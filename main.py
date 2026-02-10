@@ -5,6 +5,8 @@ from superdb import *
 from upload_song_cloudinary import *
 import os
 import uvicorn
+from ytmusicapi import YTMusic
+yt = YTMusic()
 
 app=FastAPI()
 
