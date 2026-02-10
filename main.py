@@ -29,6 +29,14 @@ def add_song(url:str):
 def home():
     return "Welcome to saragama server (Railway)"
 
+@app.get("/autocomplete")
+def autocomplete(q: str):
+    if len(q) < 2:
+        return []
+
+    data = yt.search(q, filter="songs", limit=8)
+    return [i["title"] for i in data if "title" in i]
+
 
 @app.post("/addsong")
 def add_song_to_library(url:str,background_task:BackgroundTasks):
