@@ -4,6 +4,8 @@ import yt_dlp
 
 def download_music(url):
     cookies = os.getenv("YT_COOKIES")
+    print("YT_COOKIES exists:", bool(cookies))
+    print("YT_COOKIES length:", len(cookies) if cookies else 0)
     if not cookies:
         raise Exception("YT_COOKIES environment variable not set")
 
