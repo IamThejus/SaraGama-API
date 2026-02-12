@@ -15,26 +15,40 @@ def download_music(url):
         cookie_path = f.name
 
     ydl_opts = {
-        "format": "bestaudio/best",
-        "noplaylist": True,
-        "outtmpl": "audio.%(ext)s",
-        "cookies": cookie_path,
-        "user_agent": "Mozilla/5.0",
-        "extractor_retries": 5,
-        "fragment_retries": 5,
-        "sleep_interval": 1,
-        "max_sleep_interval": 5,
-        "js_runtimes": {"node": {}},
-        "postprocessors": [
-            {
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "192",
-            }
-        ],
-        "quiet": True,
-        "no_warnings": True,
-    }
+    "format": "bestaudio/best",
+    "noplaylist": True,
+    "outtmpl": "audio.%(ext)s",
+    "cookies": cookie_path,
+
+    # 🔥 MUST look like a real Chrome browser
+    "user_agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/121.0.0.0 Safari/537.36"
+    ),
+
+    # 🔥 Extra headers matter on cloud IPs
+    "http_headers": {
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://www.youtube.com/",
+        "DNT": "1",
+    },
+
+    # Stability
+    "extractor_retries": 10,
+    "fragment_retries": 10,
+    "sleep_interval": 2,
+    "max_sleep_interval": 6,
+
+    # JS challenge support
+    "js_runtimes": {"node": {}},
+    "geo_bypass": True,
+
+    # Noise reduction
+    "quiet": True,
+    "no_warnings": True,
+}
+
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=True)
