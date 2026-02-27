@@ -41,6 +41,7 @@ def autocomplete(q: str):
         result["video_url"]=i["videoId"]
         result["artist"]=[artist["name"] for artist in i["artists"]]
         result["thumbnail"]=i["thumbnails"][-1]["url"]
+        result["duration"]=i["duration"]
         collection.append(result)
     return collection
 
