@@ -45,6 +45,12 @@ def autocomplete(q: str):
         collection.append(result)
     return collection
 
+@app.get("/getupdates")
+def get_yt_updates():
+    result=yt.get_charts(country="IN")
+    del result["countries"]
+    return result
+
 
 @app.post("/addsong")
 def add_song_to_library(url:str,background_task:BackgroundTasks):
