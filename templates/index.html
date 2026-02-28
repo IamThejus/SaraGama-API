@@ -4,181 +4,602 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Saramaga API</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#0b0b0b;color:#fff;line-height:1.6}
-body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(#1a1a1a 1px,transparent 1px);background-size:28px 28px;opacity:.4;z-index:-1}
-
-nav{display:flex;justify-content:space-between;align-items:center;padding:20px 60px;border-bottom:1px solid #1a1a1a;position:sticky;top:0;background:#0b0b0b;z-index:1000}
-nav h1{font-weight:800;font-size:20px;letter-spacing:1px}
-
-.nav-links{display:flex;align-items:center}
-.nav-links a{margin-left:30px;text-decoration:none;color:#aaa;position:relative;transition:.3s}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:linear-gradient(90deg,#ff4b2b,#ff416c);transition:.3s}
-.nav-links a:hover{color:#fff}
-.nav-links a:hover::after{width:100%}
-.cta{background:linear-gradient(90deg,#ff4b2b,#ff416c);padding:6px 14px;border-radius:10px;color:#fff !important}
-.menu-toggle{display:none;font-size:24px;cursor:pointer}
-
-.hero{text-align:center;padding:140px 20px 100px}
-.hero h2{font-size:64px;font-weight:800;max-width:900px;margin:auto}
-.hero h2 span{background:linear-gradient(90deg,#ff4b2b,#ff416c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{margin-top:20px;font-size:18px;color:#999;max-width:750px;margin-left:auto;margin-right:auto}
-.base-url{margin-top:40px;display:inline-block;background:#111;padding:18px 24px;border-radius:16px;font-family:'JetBrains Mono',monospace;border:1px solid #222}
-
-.docs-layout{display:flex;max-width:1400px;margin:120px auto}
-.sidebar{width:250px;border-right:1px solid #1a1a1a;padding:40px 20px;position:sticky;top:100px;height:fit-content}
-.sidebar a{display:block;color:#888;text-decoration:none;margin-bottom:20px;transition:.3s}
-.sidebar a:hover{color:#fff}
-.docs-content{flex:1;padding:40px}
-
-.endpoint-card{background:#111;border-radius:20px;padding:30px;margin-bottom:40px;border:1px solid #1f1f1f;cursor:pointer;transition:.3s}
-.endpoint-card:hover{border-color:#ff416c}
-.endpoint-title{font-size:20px;font-weight:600}
-.badge{background:linear-gradient(90deg,#ff4b2b,#ff416c);padding:4px 10px;border-radius:8px;font-size:12px;font-weight:600;margin-right:10px}
-
-.endpoint-details{display:none;margin-top:20px}
-.endpoint-details pre{background:#0e0e0e;padding:20px;border-radius:14px;overflow-x:auto;border:1px solid #1a1a1a;color:#00ffae;font-family:'JetBrains Mono',monospace;margin-top:15px}
-
-.about{max-width:900px;margin:140px auto;padding:0 20px;text-align:center}
-.about h3{font-size:36px;margin-bottom:30px}
-.about p{color:#aaa;font-size:18px;line-height:1.8}
-
-footer{text-align:center;padding:60px;border-top:1px solid #1a1a1a;color:#777}
-
-@media(max-width:900px){
-.docs-layout{flex-direction:column}
-.sidebar{width:100%;border-right:none;border-bottom:1px solid #1a1a1a}
-.menu-toggle{display:block}
-.nav-links{display:none;flex-direction:column;position:absolute;right:20px;top:70px;background:#111;padding:20px;border-radius:10px}
-.nav-links.show{display:flex}
+:root{
+  --bg:#080808;
+  --bg2:#0f0f0f;
+  --bg3:#161616;
+  --bg4:#1e1e1e;
+  --border:#222;
+  --text:#f0f0f0;
+  --muted:#666;
+  --muted2:#999;
+  --accent1:#ff4b2b;
+  --accent2:#ff416c;
+  --grad:linear-gradient(90deg,#ff4b2b,#ff416c);
+  --green:#00ffae;
+  --radius:16px;
 }
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+/* GRID BG */
+body::before{
+  content:"";position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(255,75,43,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,75,43,.04) 1px,transparent 1px);
+  background-size:48px 48px;
+  z-index:-1;pointer-events:none
+}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 48px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(8,8,8,.92);backdrop-filter:blur(12px);z-index:1000}
+.nav-logo{font-weight:800;font-size:18px;letter-spacing:2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{text-decoration:none;color:var(--muted2);font-size:14px;font-weight:600;letter-spacing:.5px;transition:.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--grad);padding:8px 18px;border-radius:10px;color:#fff !important;font-weight:700 !important}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:8px;cursor:pointer;font-size:18px}
+
+/* HERO */
+.hero{text-align:center;padding:120px 24px 80px;position:relative}
+.hero-tag{display:inline-block;background:rgba(255,75,43,.1);border:1px solid rgba(255,75,43,.25);color:#ff7055;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px}
+.hero h2{font-size:clamp(36px,7vw,72px);font-weight:800;max-width:820px;margin:0 auto 20px;line-height:1.1}
+.hero h2 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:clamp(15px,2vw,18px);color:var(--muted2);max-width:600px;margin:0 auto 40px}
+.base-url{display:inline-flex;align-items:center;gap:12px;background:var(--bg2);padding:14px 22px;border-radius:14px;font-family:'JetBrains Mono',monospace;font-size:14px;border:1px solid var(--border);color:var(--green)}
+.base-url span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;font-size:12px}
+
+/* STATS BAR */
+.stats{display:flex;justify-content:center;gap:0;margin:60px auto 0;max-width:700px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.stat{flex:1;text-align:center;padding:20px 12px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-num{font-size:24px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* DOCS LAYOUT */
+.docs-section{max-width:1280px;margin:100px auto;padding:0 24px}
+.docs-header{margin-bottom:48px}
+.docs-header h3{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:8px}
+.docs-header p{color:var(--muted2);font-size:15px}
+
+.endpoints-grid{display:grid;gap:20px}
+
+/* ENDPOINT CARD */
+.endpoint-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  transition:border-color .25s,transform .2s;
+}
+.endpoint-card:hover{border-color:rgba(255,75,43,.4)}
+.endpoint-card.open{border-color:rgba(255,75,43,.5)}
+
+.endpoint-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 28px;cursor:pointer;user-select:none;
+  transition:background .2s;
+}
+.endpoint-header:hover{background:var(--bg3)}
+.endpoint-left{display:flex;align-items:center;gap:14px;flex:1;min-width:0}
+.badge{background:var(--grad);padding:4px 12px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:.5px;flex-shrink:0}
+.endpoint-path{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.endpoint-desc{color:var(--muted2);font-size:13px;margin-left:4px;display:none}
+.endpoint-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.endpoint-tag{font-size:11px;color:var(--muted);background:var(--bg4);padding:3px 8px;border-radius:6px;letter-spacing:.5px;display:none}
+.chevron{width:20px;height:20px;border:1.5px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;transition:transform .25s,background .2s,border-color .2s}
+.endpoint-card.open .chevron{transform:rotate(180deg);background:rgba(255,75,43,.15);border-color:rgba(255,75,43,.4)}
+.chevron svg{width:10px;height:10px;stroke:var(--muted2);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ENDPOINT BODY */
+.endpoint-body{display:none;padding:0 28px 28px;border-top:1px solid var(--border)}
+.endpoint-card.open .endpoint-body{display:block}
+
+.tabs{display:flex;gap:4px;margin:20px 0 16px;background:var(--bg3);padding:4px;border-radius:10px;width:fit-content}
+.tab{padding:6px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted);transition:.2s;border:none;background:none;font-family:'Syne',sans-serif}
+.tab.active{background:var(--bg4);color:var(--text);border:1px solid var(--border)}
+
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* TRY IT */
+.try-form{display:grid;gap:14px;margin-bottom:20px}
+.field-group{display:flex;flex-direction:column;gap:6px}
+.field-group label{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.5px;text-transform:uppercase}
+.field-group input{
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text);
+  outline:none;transition:.2s;width:100%
+}
+.field-group input:focus{border-color:rgba(255,75,43,.5);background:var(--bg4)}
+.field-group input::placeholder{color:var(--muted)}
+
+.run-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--grad);border:none;color:#fff;
+  padding:11px 24px;border-radius:10px;font-family:'Syne',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s,transform .15s;
+  width:fit-content;letter-spacing:.5px
+}
+.run-btn:hover{opacity:.85;transform:translateY(-1px)}
+.run-btn:active{transform:scale(.97)}
+.run-btn.loading{opacity:.6;pointer-events:none}
+
+.response-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.response-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--bg3);border-bottom:1px solid var(--border)}
+.response-status{font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.response-status.ok{color:var(--green)}
+.response-status.err{color:#ff6060}
+.response-status.idle{color:var(--muted)}
+.copy-btn{background:none;border:1px solid var(--border);color:var(--muted2);padding:3px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;transition:.2s}
+.copy-btn:hover{color:var(--text);border-color:var(--muted)}
+.response-pre{padding:18px;overflow-x:auto;color:var(--green);font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;max-height:360px;overflow-y:auto;white-space:pre-wrap;word-break:break-word}
+.response-pre .json-key{color:#7dd3fc}
+.response-pre .json-str{color:var(--green)}
+.response-pre .json-num{color:#fbbf24}
+.response-pre .json-bool{color:#f87171}
+
+/* SAMPLE */
+.sample-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.sample-label{background:var(--bg3);padding:8px 14px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border)}
+.sample-pre{padding:16px;overflow-x:auto;color:var(--green);font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;max-height:280px;overflow-y:auto;white-space:pre-wrap;word-break:break-word}
+
+/* ABOUT */
+.about{max-width:900px;margin:120px auto;padding:0 24px;text-align:center}
+.about-inner{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:60px 48px}
+.about h3{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:20px}
+.about p{color:var(--muted2);font-size:16px;line-height:1.9;max-width:640px;margin:0 auto}
+
+/* FOOTER */
+footer{text-align:center;padding:48px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+footer span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:16px 20px}
+  .nav-links{display:none;position:fixed;top:63px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);flex-direction:column;padding:20px;gap:16px;z-index:999}
+  .nav-links.show{display:flex}
+  .menu-toggle{display:flex;align-items:center}
+  .hero{padding:80px 20px 60px}
+  .stats{margin:40px auto 0}
+  .stat-num{font-size:20px}
+  .endpoint-desc{display:block}
+  .endpoint-tag{display:block}
+  .endpoint-header{padding:16px 18px}
+  .endpoint-body{padding:0 18px 20px}
+  .about-inner{padding:36px 24px}
+  .tabs{width:100%}
+  .tab{flex:1;text-align:center}
+}
+
+@media(max-width:480px){
+  .stats{flex-direction:column;border-radius:var(--radius)}
+  .stat{border-right:none;border-bottom:1px solid var(--border)}
+  .stat:last-child{border-bottom:none}
+  .base-url{font-size:12px;word-break:break-all;text-align:left}
+}
+
+/* SPINNER */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+
+/* PULSE */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.endpoint-card{animation:fadeUp .4s ease both}
+.endpoint-card:nth-child(1){animation-delay:.05s}
+.endpoint-card:nth-child(2){animation-delay:.1s}
+.endpoint-card:nth-child(3){animation-delay:.15s}
+.endpoint-card:nth-child(4){animation-delay:.2s}
 </style>
 </head>
 <body>
 
 <nav>
-<h1>SARAMAGA</h1>
-<div class="menu-toggle" onclick="toggleMenu()">☰</div>
-<div class="nav-links" id="navLinks">
-<a href="#home">Home</a>
-<a href="#docs">Docs</a>
-<a href="#about">About</a>
-<a href="#docs" class="cta">Get Started</a>
-</div>
+  <div class="nav-logo">SARAMAGA</div>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="#home">Home</a>
+    <a href="#docs">Docs</a>
+    <a href="#about">About</a>
+    <a href="#docs" class="nav-cta">Get Started</a>
+  </div>
 </nav>
 
 <section class="hero" id="home">
-<h2>Music Infrastructure <span>for Developers</span></h2>
-<p>No ads. No subscriptions. Just structured YouTube Music data built for modern apps.</p>
-<div class="base-url">https://saragama-render.onrender.com/</div>
+  <div class="hero-tag">🎵 Free Music API</div>
+  <h2>Music Infrastructure<br><span>for Developers</span></h2>
+  <p>No ads. No subscriptions. Just structured YouTube Music data built for modern apps.</p>
+  <div class="base-url">
+    <span>BASE</span>
+    https://saragama-render.onrender.com/
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Endpoints</div></div>
+    <div class="stat"><div class="stat-num">Free</div><div class="stat-label">Forever</div></div>
+    <div class="stat"><div class="stat-num">REST</div><div class="stat-label">Protocol</div></div>
+    <div class="stat"><div class="stat-num">JSON</div><div class="stat-label">Response</div></div>
+  </div>
 </section>
 
-<section id="docs" class="docs-layout">
-<div class="sidebar">
-<a href="#autocomplete">/autocomplete</a>
-<a href="#recommendation">/recommendation</a>
-<a href="#playlist">/playlist</a>
-<a href="#trending">/trending</a>
-</div>
+<section id="docs" class="docs-section">
+  <div class="docs-header">
+    <h3>API Reference</h3>
+    <p>Click any endpoint to expand, view samples, and try it live.</p>
+  </div>
 
-<div class="docs-content">
+  <div class="endpoints-grid">
 
-<div class="endpoint-card" onclick="toggleDetails('auto')">
-<div class="endpoint-title"><span class="badge">GET</span>/autocomplete</div>
-<div class="endpoint-details" id="auto">
-<strong>Sample Request</strong>
-<pre>GET /autocomplete?q=javed zind</pre>
-<strong>Sample Response</strong>
-<pre>[{
- "title":"Javeda Zindagi",
- "video_url":"PNacQbYrH_E",
- "artist":["Kshitij","Shilpa Rao"],
- "thumbnail":"https://lh3.googleusercontent.com/...",
- "duration":"8:23"
-}]</pre>
-</div>
-</div>
+    <!-- AUTOCOMPLETE -->
+    <div class="endpoint-card" id="card-auto">
+      <div class="endpoint-header" onclick="toggleCard('auto')">
+        <div class="endpoint-left">
+          <span class="badge">GET</span>
+          <span class="endpoint-path">/autocomplete</span>
+          <span class="endpoint-desc">— Search & autocomplete tracks</span>
+        </div>
+        <div class="endpoint-right">
+          <span class="endpoint-tag">Query: q</span>
+          <div class="chevron"><svg viewBox="0 0 10 6"><polyline points="1 1 5 5 9 1"/></svg></div>
+        </div>
+      </div>
+      <div class="endpoint-body">
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab('auto','try')">▶ Try it</button>
+          <button class="tab" onclick="switchTab('auto','sample')">Sample</button>
+        </div>
 
-<div class="endpoint-card" onclick="toggleDetails('rec')">
-<div class="endpoint-title"><span class="badge">GET</span>/recommendation</div>
-<div class="endpoint-details" id="rec">
-<strong>Sample Request</strong>
-<pre>GET /recommendation?video_id=PNacQbYrH_E</pre>
-<strong>Sample Response</strong>
-<pre>[{
- "video_id":"aG7MaqtWxT8",
- "title":"Khuda Jaane",
- "artist":"Vishal and Sheykhar",
- "album":"Bachna Ae Haseeno",
- "duration":"5:34"
-}]</pre>
-</div>
-</div>
+        <div class="tab-content active" id="auto-try">
+          <div class="try-form">
+            <div class="field-group">
+              <label>q — Search query</label>
+              <input type="text" id="auto-q" placeholder="e.g. javed zindagi" />
+            </div>
+          </div>
+          <button class="run-btn" onclick="runEndpoint('auto')">
+            <span class="btn-label">Run Request</span>
+          </button>
+          <div style="margin-top:16px">
+            <div class="response-box">
+              <div class="response-header">
+                <span class="response-status idle" id="auto-status">Waiting...</span>
+                <button class="copy-btn" onclick="copyResponse('auto')">Copy</button>
+              </div>
+              <pre class="response-pre" id="auto-response">// Response will appear here</pre>
+            </div>
+          </div>
+        </div>
 
-<div class="endpoint-card" onclick="toggleDetails('playlist')">
-<div class="endpoint-title"><span class="badge">GET</span>/playlist</div>
-<div class="endpoint-details" id="playlist">
-<strong>Sample Request</strong>
-<pre>GET /playlist?playid=PL4fGSI1pDJn5JXkyIohg2RstsbL2SnRew</pre>
-<strong>Sample Response</strong>
-<pre>{
- "title":"Top Weekly Videos Punjabi",
- "trackCount":100,
- "duration":"5 hours, 37 minutes",
- "tracks":[{
-   "videoId":"YyepU5ztLf4",
-   "title":"Shararat",
-   "duration":"3:49"
- }]
-}</pre>
-</div>
-</div>
+        <div class="tab-content" id="auto-sample">
+          <div class="sample-block"><div class="sample-label">Request</div><pre class="sample-pre">GET /autocomplete?q=javed zind</pre></div>
+          <div class="sample-block"><div class="sample-label">Response</div><pre class="sample-pre" id="auto-sample-pre">[{
+  "title": "Javeda Zindagi",
+  "video_url": "PNacQbYrH_E",
+  "artist": ["Kshitij", "Shilpa Rao"],
+  "thumbnail": "https://lh3.googleusercontent.com/...",
+  "duration": "8:23"
+}]</pre></div>
+        </div>
+      </div>
+    </div>
 
-<div class="endpoint-card" onclick="toggleDetails('trend')">
-<div class="endpoint-title"><span class="badge">GET</span>/trending</div>
-<div class="endpoint-details" id="trend">
-<strong>Sample Request</strong>
-<pre>GET /trending</pre>
-<strong>Sample Response</strong>
-<pre>{
- "daily":[{"title":"Trending 20 India"}],
- "weekly":[{"title":"Top Weekly Videos Punjabi"}],
- "artists":[{"title":"Alka Yagnik","rank":"1"}]
-}</pre>
-</div>
-</div>
+    <!-- RECOMMENDATION -->
+    <div class="endpoint-card" id="card-rec">
+      <div class="endpoint-header" onclick="toggleCard('rec')">
+        <div class="endpoint-left">
+          <span class="badge">GET</span>
+          <span class="endpoint-path">/recommendation</span>
+          <span class="endpoint-desc">— Get related track recommendations</span>
+        </div>
+        <div class="endpoint-right">
+          <span class="endpoint-tag">Query: video_id</span>
+          <div class="chevron"><svg viewBox="0 0 10 6"><polyline points="1 1 5 5 9 1"/></svg></div>
+        </div>
+      </div>
+      <div class="endpoint-body">
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab('rec','try')">▶ Try it</button>
+          <button class="tab" onclick="switchTab('rec','sample')">Sample</button>
+        </div>
 
-</div>
+        <div class="tab-content active" id="rec-try">
+          <div class="try-form">
+            <div class="field-group">
+              <label>video_id — YouTube video ID</label>
+              <input type="text" id="rec-video_id" placeholder="e.g. PNacQbYrH_E" />
+            </div>
+          </div>
+          <button class="run-btn" onclick="runEndpoint('rec')">
+            <span class="btn-label">Run Request</span>
+          </button>
+          <div style="margin-top:16px">
+            <div class="response-box">
+              <div class="response-header">
+                <span class="response-status idle" id="rec-status">Waiting...</span>
+                <button class="copy-btn" onclick="copyResponse('rec')">Copy</button>
+              </div>
+              <pre class="response-pre" id="rec-response">// Response will appear here</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="rec-sample">
+          <div class="sample-block"><div class="sample-label">Request</div><pre class="sample-pre">GET /recommendation?video_id=PNacQbYrH_E</pre></div>
+          <div class="sample-block"><div class="sample-label">Response</div><pre class="sample-pre">[{
+  "video_id": "aG7MaqtWxT8",
+  "title": "Khuda Jaane",
+  "artist": "Vishal and Sheykhar",
+  "album": "Bachna Ae Haseeno",
+  "duration": "5:34"
+}]</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLAYLIST -->
+    <div class="endpoint-card" id="card-playlist">
+      <div class="endpoint-header" onclick="toggleCard('playlist')">
+        <div class="endpoint-left">
+          <span class="badge">GET</span>
+          <span class="endpoint-path">/playlist</span>
+          <span class="endpoint-desc">— Fetch playlist tracks & metadata</span>
+        </div>
+        <div class="endpoint-right">
+          <span class="endpoint-tag">Query: playid</span>
+          <div class="chevron"><svg viewBox="0 0 10 6"><polyline points="1 1 5 5 9 1"/></svg></div>
+        </div>
+      </div>
+      <div class="endpoint-body">
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab('playlist','try')">▶ Try it</button>
+          <button class="tab" onclick="switchTab('playlist','sample')">Sample</button>
+        </div>
+
+        <div class="tab-content active" id="playlist-try">
+          <div class="try-form">
+            <div class="field-group">
+              <label>playid — YouTube Music playlist ID</label>
+              <input type="text" id="playlist-playid" placeholder="e.g. PL4fGSI1pDJn5JXkyIohg2RstsbL2SnRew" />
+            </div>
+          </div>
+          <button class="run-btn" onclick="runEndpoint('playlist')">
+            <span class="btn-label">Run Request</span>
+          </button>
+          <div style="margin-top:16px">
+            <div class="response-box">
+              <div class="response-header">
+                <span class="response-status idle" id="playlist-status">Waiting...</span>
+                <button class="copy-btn" onclick="copyResponse('playlist')">Copy</button>
+              </div>
+              <pre class="response-pre" id="playlist-response">// Response will appear here</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="playlist-sample">
+          <div class="sample-block"><div class="sample-label">Request</div><pre class="sample-pre">GET /playlist?playid=PL4fGSI1pDJn5JXkyIohg2RstsbL2SnRew</pre></div>
+          <div class="sample-block"><div class="sample-label">Response</div><pre class="sample-pre">{
+  "title": "Top Weekly Videos Punjabi",
+  "trackCount": 100,
+  "duration": "5 hours, 37 minutes",
+  "tracks": [{
+    "videoId": "YyepU5ztLf4",
+    "title": "Shararat",
+    "duration": "3:49"
+  }]
+}</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRENDING -->
+    <div class="endpoint-card" id="card-trending">
+      <div class="endpoint-header" onclick="toggleCard('trending')">
+        <div class="endpoint-left">
+          <span class="badge">GET</span>
+          <span class="endpoint-path">/trending</span>
+          <span class="endpoint-desc">— Get trending music & artists</span>
+        </div>
+        <div class="endpoint-right">
+          <span class="endpoint-tag">No params</span>
+          <div class="chevron"><svg viewBox="0 0 10 6"><polyline points="1 1 5 5 9 1"/></svg></div>
+        </div>
+      </div>
+      <div class="endpoint-body">
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab('trending','try')">▶ Try it</button>
+          <button class="tab" onclick="switchTab('trending','sample')">Sample</button>
+        </div>
+
+        <div class="tab-content active" id="trending-try">
+          <div class="try-form">
+            <div class="field-group">
+              <label>No parameters required</label>
+              <input type="text" disabled placeholder="This endpoint needs no input" style="opacity:.4;cursor:not-allowed" />
+            </div>
+          </div>
+          <button class="run-btn" onclick="runEndpoint('trending')">
+            <span class="btn-label">Run Request</span>
+          </button>
+          <div style="margin-top:16px">
+            <div class="response-box">
+              <div class="response-header">
+                <span class="response-status idle" id="trending-status">Waiting...</span>
+                <button class="copy-btn" onclick="copyResponse('trending')">Copy</button>
+              </div>
+              <pre class="response-pre" id="trending-response">// Response will appear here</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="trending-sample">
+          <div class="sample-block"><div class="sample-label">Request</div><pre class="sample-pre">GET /trending</pre></div>
+          <div class="sample-block"><div class="sample-label">Response</div><pre class="sample-pre">{
+  "daily": [{"title": "Trending 20 India"}],
+  "weekly": [{"title": "Top Weekly Videos Punjabi"}],
+  "artists": [{"title": "Alka Yagnik", "rank": "1"}]
+}</pre></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <section class="about" id="about">
-<h3>Why We Built Saramaga</h3>
-<p>
-Music should be accessible to everyone — not locked behind subscriptions or interrupted by ads.
-Saramaga was built for developers creating streaming apps, discovery engines, playlist explorers,
-and experimental music platforms.
-<br><br>
-This is infrastructure for builders. Clean. Structured. Free to use.
-Music without friction.
-</p>
+  <div class="about-inner">
+    <h3>Why We Built Saramaga</h3>
+    <p>
+      Music should be accessible to everyone — not locked behind subscriptions or interrupted by ads.
+      Saramaga was built for developers creating streaming apps, discovery engines, playlist explorers,
+      and experimental music platforms.
+      <br><br>
+      This is infrastructure for builders. Clean. Structured. Free to use. Music without friction.
+    </p>
+  </div>
 </section>
 
 <footer>
-© 2026 Saramaga • Music for Everyone • Built for Developers
+  © 2026 <span>Saramaga</span> &nbsp;·&nbsp; Music for Everyone &nbsp;·&nbsp; Built for Developers
 </footer>
 
 <script>
-function toggleMenu(){document.getElementById('navLinks').classList.toggle('show');}
-function toggleDetails(id){
- const el=document.getElementById(id);
- el.style.display=el.style.display==='block'?'none':'block';
-}
-</script>
+const BASE = 'https://saragama-render.onrender.com';
 
+const ENDPOINTS = {
+  auto: {
+    path: '/autocomplete',
+    params: ['q']
+  },
+  rec: {
+    path: '/recommendation',
+    params: ['video_id']
+  },
+  playlist: {
+    path: '/playlist',
+    params: ['playid']
+  },
+  trending: {
+    path: '/trending',
+    params: []
+  }
+};
+
+// Store responses for copy
+const responses = {};
+
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('show');
+}
+
+// Close menu on outside click
+document.addEventListener('click', e => {
+  const nav = document.getElementById('navLinks');
+  if (nav.classList.contains('show') && !e.target.closest('nav')) {
+    nav.classList.remove('show');
+  }
+});
+
+function toggleCard(id) {
+  const card = document.getElementById('card-' + id);
+  card.classList.toggle('open');
+}
+
+function switchTab(cardId, tab) {
+  const body = document.querySelector(`#card-${cardId} .endpoint-body`);
+  body.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  body.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById(`${cardId}-${tab}`).classList.add('active');
+  const tabs = body.querySelectorAll('.tab');
+  const idx = tab === 'try' ? 0 : 1;
+  tabs[idx].classList.add('active');
+}
+
+function syntaxHighlight(json) {
+  if (typeof json !== 'string') {
+    json = JSON.stringify(json, null, 2);
+  }
+  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, match => {
+    let cls = 'json-num';
+    if (/^"/.test(match)) {
+      if (/:$/.test(match)) cls = 'json-key';
+      else cls = 'json-str';
+    } else if (/true|false/.test(match)) cls = 'json-bool';
+    else if (/null/.test(match)) cls = 'json-bool';
+    return `<span class="${cls}">${match}</span>`;
+  });
+}
+
+async function runEndpoint(id) {
+  const cfg = ENDPOINTS[id];
+  const btn = document.querySelector(`#card-${id} .run-btn`);
+  const statusEl = document.getElementById(id + '-status');
+  const responseEl = document.getElementById(id + '-response');
+
+  // Build URL
+  const params = new URLSearchParams();
+  for (const p of cfg.params) {
+    const val = document.getElementById(`${id}-${p}`)?.value?.trim();
+    if (val) params.append(p, val);
+  }
+
+  const url = BASE + cfg.path + (params.toString() ? '?' + params.toString() : '');
+
+  // Loading state
+  btn.classList.add('loading');
+  btn.innerHTML = '<div class="spinner"></div><span>Fetching...</span>';
+  statusEl.className = 'response-status idle';
+  statusEl.textContent = 'Loading...';
+  responseEl.innerHTML = '// Sending request...';
+
+  try {
+    const res = await fetch(url);
+    const text = await res.text();
+
+    let parsed;
+    try { parsed = JSON.parse(text); }
+    catch { parsed = text; }
+
+    responses[id] = typeof parsed === 'string' ? parsed : JSON.stringify(parsed, null, 2);
+
+    statusEl.className = res.ok ? 'response-status ok' : 'response-status err';
+    statusEl.textContent = `${res.status} ${res.statusText}`;
+
+    const highlighted = typeof parsed === 'object' ? syntaxHighlight(parsed) : parsed;
+    responseEl.innerHTML = highlighted;
+  } catch (err) {
+    statusEl.className = 'response-status err';
+    statusEl.textContent = 'Network Error';
+    responses[id] = err.message;
+    responseEl.innerHTML = `// Error: ${err.message}\n// The server may be offline or CORS is blocking this request.`;
+  }
+
+  btn.classList.remove('loading');
+  btn.innerHTML = '<span class="btn-label">Run Request</span>';
+}
+
+function copyResponse(id) {
+  const text = responses[id] || document.getElementById(id + '-response').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector(`#card-${id} .copy-btn`);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1800);
+  });
+}
+
+// Syntax highlight sample pres on load
+document.querySelectorAll('.sample-pre').forEach(pre => {
+  const text = pre.textContent;
+  if (text.trim().startsWith('{') || text.trim().startsWith('[')) {
+    try {
+      const parsed = JSON.parse(text);
+      pre.innerHTML = syntaxHighlight(parsed);
+    } catch {}
+  }
+});
+</script>
 </body>
 </html>
