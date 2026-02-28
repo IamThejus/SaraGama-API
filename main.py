@@ -16,8 +16,11 @@ def home():
 
 @app.get("/playlist")
 def get_playlist(playid:str):
-    playlist = yt.get_playlist(playid)   
-    del playlist["owned"] 
+    try:
+        playlist = yt.get_playlist(playid)   
+        del playlist["owned"]
+    except:
+        return [] 
     return playlist
 
 @app.get("/autocomplete")
@@ -34,7 +37,7 @@ def autocomplete(q: str):
         collection.append(result)
     return collection
 
-@app.get("/gettrending")
+@app.get("/trending")
 def get_yt_trending():
     result=yt.get_charts(country="IN")
     del result["countries"]
