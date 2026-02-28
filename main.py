@@ -43,6 +43,7 @@ def autocomplete(q: str):
 def get_yt_trending():
     result=yt.get_charts(country="IN")
     del result["countries"]
+    result["daily"].pop(0)             ## Added this because,the playlistid of that index returns none
     return result
 
 
