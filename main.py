@@ -4,6 +4,7 @@ import os
 import uvicorn
 from ytmusicapi import YTMusic
 yt = YTMusic()
+from yt_engine import *
 
 app=FastAPI()
 
@@ -25,17 +26,7 @@ def get_playlist(playid:str):
 
 @app.get("/autocomplete")
 def autocomplete(q: str):
-    collection=[]
-    data=yt.search(q, filter="songs",)
-    for i in data:
-        result={}
-        result["title"]=i["title"]
-        result["video_url"]=i["videoId"]
-        result["artist"]=[artist["name"] for artist in i["artists"]]
-        result["thumbnail"]=i["thumbnails"][-1]["url"]
-        result["duration"]=i["duration"]
-        collection.append(result)
-    return collection
+    return get_autocomplete(q)
 
 @app.get("/trending")
 def get_yt_trending():
@@ -44,7 +35,9 @@ def get_yt_trending():
     return result
 
 
-
+@app.get("/recommendation")
+def get_recommend(video_id:str):
+    return get_recommendation(video_id=video_id)
 
 
 if __name__ == "__main__":
