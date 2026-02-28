@@ -1,8 +1,5 @@
-from fastapi import FastAPI,BackgroundTasks
-from yt_downloader import *
-from models import *
-from superdb import *
-from upload_song_cloudinary import *
+from fastapi import FastAPI
+
 import os
 import uvicorn
 from ytmusicapi import YTMusic
@@ -10,26 +7,18 @@ yt = YTMusic()
 
 app=FastAPI()
 
-def add_song(url:str):
-    current_id=get_latest_id()
-    payload=download_music(url)
-    song_id=current_id+1
-    song_url=upload_song(song_id)
-    payload.update({
-        "id":song_id,
-        "url":song_url
-    })
-    song=SONG(**payload)
-    status=add_music(song)
-    if status:
-        return True
-    else:
-        return False
+
 
 
 @app.get("/")
 def home():
-    return "Welcome to saragama server (Railway)"
+    return "Welcome to saragama server (Render)"
+
+@app.get("/playlist")
+def get_playlist(playid:str):
+    playlist = yt.get_playlist(playid)   
+    del playlist["owned"] 
+    return playlist
 
 @app.get("/autocomplete")
 def autocomplete(q: str):
@@ -52,10 +41,7 @@ def get_yt_trending():
     return result
 
 
-@app.post("/addsong")
-def add_song_to_library(url:str,background_task:BackgroundTasks):
-    background_task.add_task(add_song,url)
-    return True
+
 
 
 if __name__ == "__main__":
