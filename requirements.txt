@@ -1,8 +1,6 @@
 fastapi
 uvicorn
-yt-dlp
-pymongo
-cloudinary
 python-dotenv
 ytmusicapi
 Jinja2
+python-multipart

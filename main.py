@@ -4,10 +4,19 @@ from fastapi.requests import Request
 import os
 import uvicorn
 from ytmusicapi import YTMusic
+from fastapi.middleware.cors import CORSMiddleware
+
 yt = YTMusic()
 from yt_engine import *
 
 app=FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 
