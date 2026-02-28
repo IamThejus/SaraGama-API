@@ -45,8 +45,8 @@ def autocomplete(q: str):
         collection.append(result)
     return collection
 
-@app.get("/getupdates")
-def get_yt_updates():
+@app.get("/gettrending")
+def get_yt_trending():
     result=yt.get_charts(country="IN")
     del result["countries"]
     return result
