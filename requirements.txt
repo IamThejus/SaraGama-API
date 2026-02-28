@@ -5,3 +5,4 @@ pymongo
 cloudinary
 python-dotenv
 ytmusicapi
+Jinja2
