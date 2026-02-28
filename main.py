@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-
+from fastapi.templating import Jinja2Templates
+from fastapi.requests import Request
 import os
 import uvicorn
 from ytmusicapi import YTMusic
@@ -10,10 +11,20 @@ app=FastAPI()
 
 
 
+templates=Jinja2Templates(directory="templates")
+
+
 
 @app.get("/")
-def home():
-    return "Welcome to saragama server (Render)"
+def home(request:Request):
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "title": "Saramaga API",
+            "message": "Music Infrastructure for Developers"
+        }
+    )
 
 @app.get("/playlist")
 def get_playlist(playid:str):

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Saramaga API</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#0b0b0b;color:#fff;line-height:1.6}
+body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(#1a1a1a 1px,transparent 1px);background-size:28px 28px;opacity:.4;z-index:-1}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 60px;border-bottom:1px solid #1a1a1a;position:sticky;top:0;background:#0b0b0b;z-index:1000}
+nav h1{font-weight:800;font-size:20px;letter-spacing:1px}
+
+.nav-links{display:flex;align-items:center}
+.nav-links a{margin-left:30px;text-decoration:none;color:#aaa;position:relative;transition:.3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:linear-gradient(90deg,#ff4b2b,#ff416c);transition:.3s}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{width:100%}
+.cta{background:linear-gradient(90deg,#ff4b2b,#ff416c);padding:6px 14px;border-radius:10px;color:#fff !important}
+.menu-toggle{display:none;font-size:24px;cursor:pointer}
+
+.hero{text-align:center;padding:140px 20px 100px}
+.hero h2{font-size:64px;font-weight:800;max-width:900px;margin:auto}
+.hero h2 span{background:linear-gradient(90deg,#ff4b2b,#ff416c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{margin-top:20px;font-size:18px;color:#999;max-width:750px;margin-left:auto;margin-right:auto}
+.base-url{margin-top:40px;display:inline-block;background:#111;padding:18px 24px;border-radius:16px;font-family:'JetBrains Mono',monospace;border:1px solid #222}
+
+.docs-layout{display:flex;max-width:1400px;margin:120px auto}
+.sidebar{width:250px;border-right:1px solid #1a1a1a;padding:40px 20px;position:sticky;top:100px;height:fit-content}
+.sidebar a{display:block;color:#888;text-decoration:none;margin-bottom:20px;transition:.3s}
+.sidebar a:hover{color:#fff}
+.docs-content{flex:1;padding:40px}
+
+.endpoint-card{background:#111;border-radius:20px;padding:30px;margin-bottom:40px;border:1px solid #1f1f1f;cursor:pointer;transition:.3s}
+.endpoint-card:hover{border-color:#ff416c}
+.endpoint-title{font-size:20px;font-weight:600}
+.badge{background:linear-gradient(90deg,#ff4b2b,#ff416c);padding:4px 10px;border-radius:8px;font-size:12px;font-weight:600;margin-right:10px}
+
+.endpoint-details{display:none;margin-top:20px}
+.endpoint-details pre{background:#0e0e0e;padding:20px;border-radius:14px;overflow-x:auto;border:1px solid #1a1a1a;color:#00ffae;font-family:'JetBrains Mono',monospace;margin-top:15px}
+
+.about{max-width:900px;margin:140px auto;padding:0 20px;text-align:center}
+.about h3{font-size:36px;margin-bottom:30px}
+.about p{color:#aaa;font-size:18px;line-height:1.8}
+
+footer{text-align:center;padding:60px;border-top:1px solid #1a1a1a;color:#777}
+
+@media(max-width:900px){
+.docs-layout{flex-direction:column}
+.sidebar{width:100%;border-right:none;border-bottom:1px solid #1a1a1a}
+.menu-toggle{display:block}
+.nav-links{display:none;flex-direction:column;position:absolute;right:20px;top:70px;background:#111;padding:20px;border-radius:10px}
+.nav-links.show{display:flex}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<h1>SARAMAGA</h1>
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+<div class="nav-links" id="navLinks">
+<a href="#home">Home</a>
+<a href="#docs">Docs</a>
+<a href="#about">About</a>
+<a href="#docs" class="cta">Get Started</a>
+</div>
+</nav>
+
+<section class="hero" id="home">
+<h2>Music Infrastructure <span>for Developers</span></h2>
+<p>No ads. No subscriptions. Just structured YouTube Music data built for modern apps.</p>
+<div class="base-url">https://saragama-render.onrender.com/</div>
+</section>
+
+<section id="docs" class="docs-layout">
+<div class="sidebar">
+<a href="#autocomplete">/autocomplete</a>
+<a href="#recommendation">/recommendation</a>
+<a href="#playlist">/playlist</a>
+<a href="#trending">/trending</a>
+</div>
+
+<div class="docs-content">
+
+<div class="endpoint-card" onclick="toggleDetails('auto')">
+<div class="endpoint-title"><span class="badge">GET</span>/autocomplete</div>
+<div class="endpoint-details" id="auto">
+<strong>Sample Request</strong>
+<pre>GET /autocomplete?q=javed zind</pre>
+<strong>Sample Response</strong>
+<pre>[{
+ "title":"Javeda Zindagi",
+ "video_url":"PNacQbYrH_E",
+ "artist":["Kshitij","Shilpa Rao"],
+ "thumbnail":"https://lh3.googleusercontent.com/...",
+ "duration":"8:23"
+}]</pre>
+</div>
+</div>
+
+<div class="endpoint-card" onclick="toggleDetails('rec')">
+<div class="endpoint-title"><span class="badge">GET</span>/recommendation</div>
+<div class="endpoint-details" id="rec">
+<strong>Sample Request</strong>
+<pre>GET /recommendation?video_id=PNacQbYrH_E</pre>
+<strong>Sample Response</strong>
+<pre>[{
+ "video_id":"aG7MaqtWxT8",
+ "title":"Khuda Jaane",
+ "artist":"Vishal and Sheykhar",
+ "album":"Bachna Ae Haseeno",
+ "duration":"5:34"
+}]</pre>
+</div>
+</div>
+
+<div class="endpoint-card" onclick="toggleDetails('playlist')">
+<div class="endpoint-title"><span class="badge">GET</span>/playlist</div>
+<div class="endpoint-details" id="playlist">
+<strong>Sample Request</strong>
+<pre>GET /playlist?playid=PL4fGSI1pDJn5JXkyIohg2RstsbL2SnRew</pre>
+<strong>Sample Response</strong>
+<pre>{
+ "title":"Top Weekly Videos Punjabi",
+ "trackCount":100,
+ "duration":"5 hours, 37 minutes",
+ "tracks":[{
+   "videoId":"YyepU5ztLf4",
+   "title":"Shararat",
+   "duration":"3:49"
+ }]
+}</pre>
+</div>
+</div>
+
+<div class="endpoint-card" onclick="toggleDetails('trend')">
+<div class="endpoint-title"><span class="badge">GET</span>/trending</div>
+<div class="endpoint-details" id="trend">
+<strong>Sample Request</strong>
+<pre>GET /trending</pre>
+<strong>Sample Response</strong>
+<pre>{
+ "daily":[{"title":"Trending 20 India"}],
+ "weekly":[{"title":"Top Weekly Videos Punjabi"}],
+ "artists":[{"title":"Alka Yagnik","rank":"1"}]
+}</pre>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="about" id="about">
+<h3>Why We Built Saramaga</h3>
+<p>
+Music should be accessible to everyone — not locked behind subscriptions or interrupted by ads.
+Saramaga was built for developers creating streaming apps, discovery engines, playlist explorers,
+and experimental music platforms.
+<br><br>
+This is infrastructure for builders. Clean. Structured. Free to use.
+Music without friction.
+</p>
+</section>
+
+<footer>
+© 2026 Saramaga • Music for Everyone • Built for Developers
+</footer>
+
+<script>
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('show');}
+function toggleDetails(id){
+ const el=document.getElementById(id);
+ el.style.display=el.style.display==='block'?'none':'block';
+}
+</script>
+
+</body>
+</html>
