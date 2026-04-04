@@ -23,8 +23,19 @@ app.add_middleware(
 templates=Jinja2Templates(directory="templates")
 
 
-
 @app.get("/")
+def home(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "title": "Saramaga API",
+            "message": "Music Infrastructure for Developers"
+        }
+    )
+
+
+@app.get("/sumesh")
 def home(request:Request):
     return templates.TemplateResponse(
         "index.html",
