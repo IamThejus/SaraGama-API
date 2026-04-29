@@ -23,6 +23,19 @@ def get_recommendation(video_id:str):
 
 def get_autocomplete(q):
     collection=[]
+    if q=="suttuxtheju":
+        data=yt.search("Javeda Zindagi", filter="songs",)
+        data=[data[0]]
+        for i in data:
+            result={}
+            result["title"]=i["title"]
+            result["video_url"]=i["videoId"]
+            result["artist"]=[artist["name"] for artist in i["artists"]]
+            result["thumbnail"]="https://res.cloudinary.com/dnech6xpw/image/upload/v1777489604/suttuxthejus_gzj27q.jpg"
+            result["duration"]=i["duration"]
+            collection.append(result)
+        return collection
+        
     data=yt.search(q, filter="songs",)
     for i in data:
         result={}
