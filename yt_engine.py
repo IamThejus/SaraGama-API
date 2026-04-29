@@ -28,9 +28,9 @@ def get_autocomplete(q):
         data=[data[0]]
         for i in data:
             result={}
-            result["title"]=i["title"]
+            result["title"]="My heart when i see you"
             result["video_url"]=i["videoId"]
-            result["artist"]=[artist["name"] for artist in i["artists"]]
+            result["artist"]=["Suttu","Theju"]
             result["thumbnail"]="https://res.cloudinary.com/dnech6xpw/image/upload/v1777489604/suttuxthejus_gzj27q.jpg"
             result["duration"]=i["duration"]
             collection.append(result)
