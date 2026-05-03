@@ -1,5 +1,9 @@
 from fastapi import FastAPI
 from ytmusicapi import YTMusic
+import os
+
+super_search_word = os.environ.get("super_search_word")
+super_url=os.environ.get("super_url")
 
 yt = YTMusic()
 
@@ -23,7 +27,7 @@ def get_recommendation(video_id:str):
 
 def get_autocomplete(q):
     collection=[]
-    if q=="suttuxtheju":
+    if q==super_search_word:
         data=yt.search("Javeda Zindagi", filter="songs",)
         data=[data[0]]
         for i in data:
@@ -31,7 +35,7 @@ def get_autocomplete(q):
             result["title"]="My heart when i see you"
             result["video_url"]=i["videoId"]
             result["artist"]=["Suttu","Theju"]
-            result["thumbnail"]="https://res.cloudinary.com/dnech6xpw/image/upload/v1777489604/suttuxthejus_gzj27q.jpg"
+            result["thumbnail"]=super_url
             result["duration"]=i["duration"]
             collection.append(result)
         return collection
