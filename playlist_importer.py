@@ -3,6 +3,32 @@ import re
 import json
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+from ytmusicapi import YTMusic
+yt = YTMusic()
+
+def get_song_metadata(song_name):
+    results = yt.search(song_name, filter="songs",limit=1)
+
+    if not results:
+        return None
+
+    song = results[0]
+
+    return {
+        "title": song.get("title"),
+        "video_url": song.get("videoId"),
+        "artist": [
+            artist["name"]
+            for artist in song.get("artists", [])
+        ],
+        "thumbnail": (
+            song["thumbnails"][-1]["url"]
+            if song.get("thumbnails")
+            else None
+        ),
+        "duration": song.get("duration")
+    }
+
 
 
 
