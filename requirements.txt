@@ -5,3 +5,5 @@ ytmusicapi
 Jinja2
 python-multipart
 redis
+requests
+beautifulsoup4

@@ -6,6 +6,7 @@ import os
 import uvicorn
 from ytmusicapi import YTMusic
 from fastapi.middleware.cors import CORSMiddleware
+from playlist_importer import get_playlist_songs
 
 yt = YTMusic()
 from yt_engine import *
@@ -79,6 +80,11 @@ def get_mixes(request: Request):
 def post_mixes_refresh(request: Request):
     refresh_mixes(base_url=str(request.base_url))
     return {"success": True, "message": "Mixes refreshed"}
+
+@app.post("/import-playlist")
+async def import_playlist(url: str):
+    result = get_playlist_songs(url)
+    return result
 
 
 if __name__ == "__main__":
