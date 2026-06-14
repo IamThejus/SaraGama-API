@@ -194,6 +194,8 @@ footer span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fil
 .endpoint-card:nth-child(2){animation-delay:.1s}
 .endpoint-card:nth-child(3){animation-delay:.15s}
 .endpoint-card:nth-child(4){animation-delay:.2s}
+.endpoint-card:nth-child(5){animation-delay:.25s}
+.endpoint-card:nth-child(6){animation-delay:.3s}
 </style>
 </head>
 <body>
@@ -218,7 +220,7 @@ footer span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fil
     https://saragama-render.onrender.com/
   </div>
   <div class="stats">
-    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Endpoints</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Endpoints</div></div>
     <div class="stat"><div class="stat-num">Free</div><div class="stat-label">Forever</div></div>
     <div class="stat"><div class="stat-num">REST</div><div class="stat-label">Protocol</div></div>
     <div class="stat"><div class="stat-num">JSON</div><div class="stat-label">Response</div></div>
@@ -446,6 +448,127 @@ footer span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fil
       </div>
     </div>
 
+    <!-- MIXES -->
+    <div class="endpoint-card" id="card-mixes">
+      <div class="endpoint-header" onclick="toggleCard('mixes')">
+        <div class="endpoint-left">
+          <span class="badge">GET</span>
+          <span class="endpoint-path">/mixes</span>
+          <span class="endpoint-desc">— Curated Gravity mood mixes</span>
+        </div>
+        <div class="endpoint-right">
+          <span class="endpoint-tag">No params</span>
+          <div class="chevron"><svg viewBox="0 0 10 6"><polyline points="1 1 5 5 9 1"/></svg></div>
+        </div>
+      </div>
+      <div class="endpoint-body">
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab('mixes','try')">▶ Try it</button>
+          <button class="tab" onclick="switchTab('mixes','sample')">Sample</button>
+        </div>
+
+        <div class="tab-content active" id="mixes-try">
+          <div class="try-form">
+            <div class="field-group">
+              <label>No parameters required</label>
+              <input type="text" disabled placeholder="This endpoint needs no input" style="opacity:.4;cursor:not-allowed" />
+            </div>
+          </div>
+          <button class="run-btn" onclick="runEndpoint('mixes')">
+            <span class="btn-label">Run Request</span>
+          </button>
+          <div style="margin-top:16px">
+            <div class="response-box">
+              <div class="response-header">
+                <span class="response-status idle" id="mixes-status">Waiting...</span>
+                <button class="copy-btn" onclick="copyResponse('mixes')">Copy</button>
+              </div>
+              <pre class="response-pre" id="mixes-response">// Response will appear here</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="mixes-sample">
+          <div class="sample-block"><div class="sample-label">Request</div><pre class="sample-pre">GET /mixes</pre></div>
+          <div class="sample-block"><div class="sample-label">Response</div><pre class="sample-pre">{
+  "updated_at": "2026-06-14T10:32:00.123456+00:00",
+  "mixes": {
+    "focus": {
+      "title": "Focus Flow",
+      "image": "https://saragama-render.onrender.com/moods/focus.png",
+      "trackCount": 20,
+      "tracks": [
+        {
+          "video_id": "abc123",
+          "title": "Weightless",
+          "artist": "Marconi Union",
+          "album": "Weightless",
+          "duration": "8:10",
+          "thumbnail": "https://..."
+        }
+      ]
+    },
+    "night_drive": { "title": "Night Drive", "trackCount": 20, "tracks": [] },
+    "moody": { "title": "Moody", "trackCount": 20, "tracks": [] },
+    "energy": { "title": "Energy", "trackCount": 20, "tracks": [] },
+    "feel_good": { "title": "Feel Good", "trackCount": 20, "tracks": [] },
+    "discovery": { "title": "Discovery", "trackCount": 30, "tracks": [] }
+  }
+}</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIXES REFRESH -->
+    <div class="endpoint-card" id="card-mixesRefresh">
+      <div class="endpoint-header" onclick="toggleCard('mixesRefresh')">
+        <div class="endpoint-left">
+          <span class="badge">POST</span>
+          <span class="endpoint-path">/mixes/refresh</span>
+          <span class="endpoint-desc">— Regenerate Gravity mixes</span>
+        </div>
+        <div class="endpoint-right">
+          <span class="endpoint-tag">No params</span>
+          <div class="chevron"><svg viewBox="0 0 10 6"><polyline points="1 1 5 5 9 1"/></svg></div>
+        </div>
+      </div>
+      <div class="endpoint-body">
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab('mixesRefresh','try')">▶ Try it</button>
+          <button class="tab" onclick="switchTab('mixesRefresh','sample')">Sample</button>
+        </div>
+
+        <div class="tab-content active" id="mixesRefresh-try">
+          <div class="try-form">
+            <div class="field-group">
+              <label>No parameters required</label>
+              <input type="text" disabled placeholder="This endpoint needs no input" style="opacity:.4;cursor:not-allowed" />
+            </div>
+          </div>
+          <button class="run-btn" onclick="runEndpoint('mixesRefresh')">
+            <span class="btn-label">Run Request</span>
+          </button>
+          <div style="margin-top:16px">
+            <div class="response-box">
+              <div class="response-header">
+                <span class="response-status idle" id="mixesRefresh-status">Waiting...</span>
+                <button class="copy-btn" onclick="copyResponse('mixesRefresh')">Copy</button>
+              </div>
+              <pre class="response-pre" id="mixesRefresh-response">// Response will appear here</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="mixesRefresh-sample">
+          <div class="sample-block"><div class="sample-label">Request</div><pre class="sample-pre">POST /mixes/refresh</pre></div>
+          <div class="sample-block"><div class="sample-label">Response</div><pre class="sample-pre">{
+  "success": true,
+  "message": "Mixes refreshed"
+}</pre></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -485,6 +608,15 @@ const ENDPOINTS = {
   trending: {
     path: '/trending',
     params: []
+  },
+  mixes: {
+    path: '/mixes',
+    params: []
+  },
+  mixesRefresh: {
+    path: '/mixes/refresh',
+    params: [],
+    method: 'POST'
   }
 };
 
@@ -556,7 +688,7 @@ async function runEndpoint(id) {
   responseEl.innerHTML = '// Sending request...';
 
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { method: cfg.method || 'GET' });
     const text = await res.text();
 
     let parsed;

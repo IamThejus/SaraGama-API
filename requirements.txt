@@ -4,3 +4,4 @@ python-dotenv
 ytmusicapi
 Jinja2
 python-multipart
+redis

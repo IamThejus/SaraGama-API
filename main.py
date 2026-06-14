@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.templating import Jinja2Templates
 from fastapi.requests import Request
+from fastapi.staticfiles import StaticFiles
 import os
 import uvicorn
 from ytmusicapi import YTMusic
@@ -22,6 +23,9 @@ app.add_middleware(
 
 templates=Jinja2Templates(directory="templates")
 
+# Serve mood cover art at /moods/<name>.png
+app.mount("/moods", StaticFiles(directory="moods"), name="moods")
+
 
 @app.get("/")
 def home(request: Request):
@@ -35,16 +39,6 @@ def home(request: Request):
     )
 
 
-@app.get("/sumesh")
-def home(request:Request):
-    return templates.TemplateResponse(
-        "index.html",
-        {
-            "request": request,
-            "title": "Saramaga API",
-            "message": "Music Infrastructure for Developers"
-        }
-    )
 
 @app.get("/playlist")
 def get_playlist(playid:str):
@@ -70,6 +64,21 @@ def get_yt_trending():
 @app.get("/recommendation")
 def get_recommend(video_id:str):
     return get_recommendation(video_id=video_id)
+
+
+@app.get("/mixes")
+def get_mixes(request: Request):
+    # Serve from cache; generate lazily on the first request only.
+    cached = get_cached_mixes()
+    if cached is None:
+        cached = refresh_mixes(base_url=str(request.base_url))
+    return cached
+
+
+@app.post("/mixes/refresh")
+def post_mixes_refresh(request: Request):
+    refresh_mixes(base_url=str(request.base_url))
+    return {"success": True, "message": "Mixes refreshed"}
 
 
 if __name__ == "__main__":
