@@ -7,6 +7,8 @@ import uvicorn
 from ytmusicapi import YTMusic
 from fastapi.middleware.cors import CORSMiddleware
 from playlist_importer import get_playlist_songs,get_song_metadata
+import ytmusicapi
+import sys
 
 yt = YTMusic()
 from yt_engine import *
@@ -39,6 +41,12 @@ def home(request: Request):
         }
     )
 
+@app.get("/debug")
+def debug():
+    return {
+        "ytmusicapi": ytmusicapi.__version__,
+        "python": sys.version
+    }
 
 
 @app.get("/playlist")
